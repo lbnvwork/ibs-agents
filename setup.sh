@@ -27,6 +27,7 @@ declare -A AGENT_ROLE=(
 )
 
 link() { if [ "$DRY" = 1 ]; then echo "  ln -sfn '$1' '$2'"; else ln -sfn "$1" "$2"; fi; }
+copy() { if [ "$DRY" = 1 ]; then echo "  cp -f '$1' '$2'"; else rm -f "$2"; cp -f "$1" "$2"; fi; }
 
 echo "== Глобальные (~/.cline/skills) =="
 mkdir -p ~/.cline/skills
@@ -51,9 +52,9 @@ for agent in "${!AGENT_ROLE[@]}"; do
     link "$ROOT/skills/$STATUS_BRIEFING" "$d/.cline/skills/$STATUS_BRIEFING"
   fi
   for f in "$ROOT"/clinerules/*.md; do
-    link "$f" "$d/.clinerules/$(basename "$f")"
+    copy "$f" "$d/.clinerules/$(basename "$f")"
   done
-  link "$ROOT/roles/$role/00-role.md" "$d/.clinerules/00-role.md"
+  copy "$ROOT/roles/$role/00-role.md" "$d/.clinerules/00-role.md"
   echo "  OK $agent ($role)"
 done
 echo "Готово."
