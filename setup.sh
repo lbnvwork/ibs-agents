@@ -31,6 +31,7 @@ link() { if [ "$DRY" = 1 ]; then echo "  ln -sfn '$1' '$2'"; else ln -sfn "$1" "
 echo "== Глобальные (~/.cline/skills) =="
 mkdir -p ~/.cline/skills
 for s in "${GLOBAL_SKILLS[@]}"; do
+  [ "$DRY" = 1 ] || rm -rf "$HOME/.cline/skills/$s"
   link "$ROOT/skills/$s" "$HOME/.cline/skills/$s"
 done
 
