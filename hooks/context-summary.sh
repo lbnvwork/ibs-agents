@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
-# Cline hook: восстановить «конспект» в контекст агента — против забывчивости после компрессии.
-# Подключить во вкладке Settings → Hooks на события: SessionStart и (если есть) PostCompact/AfterCompaction.
+# Cline hook: ПЕРЕД сжатием контекста (PreCompact) вставить КОРОТКИЙ конспект,
+# чтобы после компрессии он попал в summary и агент не «забыл» ключевое.
+# НЕ вешать на частые события (UserPromptSubmit/PostToolUse/TaskResume) — раздует контекст.
 #
 # Читает файл памяти текущего агента (по умолчанию <проект>/.cline/context.md),
 # выводит additionalContext в JSON-формате Cline hooks.
@@ -12,7 +13,7 @@ set -uo pipefail
 MEMORY_FILE="${MEMORY_FILE:-$PWD/.cline/context.md}"
 
 if [ -f "$MEMORY_FILE" ]; then
-  BODY="$(head -c 3000 "$MEMORY_FILE")"
+  BODY="$(head -c 300 "$MEMORY_FILE") … (полный конспект: $MEMORY_FILE)"
 else
   BODY="Конспект не найден ($MEMORY_FILE). Выполни скилл sync-env (команда «синхронизируйся»)."
 fi
@@ -22,4 +23,4 @@ BODY="${BODY//\\/\\\\}"
 BODY="${BODY//\"/\\\"}"
 BODY="${BODY//$'\n'/\\n}"
 
-printf '{"hookSpecificOutput":{"hookEventName":"SessionStart","additionalContext":"%s"}}\n' "$BODY"
+printf '{"hookSpecificOutput":{"hookEventName":"PreCompact","additionalContext":"%s"}}\n' "$BODY"
