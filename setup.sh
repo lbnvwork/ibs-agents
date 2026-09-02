@@ -17,7 +17,7 @@ while [ $# -gt 0 ]; do
 done
 
 GLOBAL_SKILLS=(explain-db git-workflow make-postman run-tests write-adr write-e2e-scenario write-instruction)
-PROJECT_COMMON=(review-code sync-status write-aquarium)
+PROJECT_COMMON=(review-code sync-status write-aquarium sync-env)
 STATUS_BRIEFING=status-briefing
 NO_STATUS_BRIEFING="feb jul"
 
