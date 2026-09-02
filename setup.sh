@@ -7,7 +7,14 @@ cd "$(dirname "$0")"
 ROOT="$(pwd)"
 AGENTS_DIR="$(dirname "$ROOT")"   # /home/max/work/ibs/projects
 DRY=0
-[ "${1:-}" = "--dry-run" ] && DRY=1
+ONLY=""
+while [ $# -gt 0 ]; do
+  case "$1" in
+    --dry-run) DRY=1 ;;
+    --only) ONLY="${2:-}"; shift ;;
+  esac
+  shift
+done
 
 GLOBAL_SKILLS=(explain-db git-workflow make-postman run-tests write-adr write-e2e-scenario write-instruction)
 PROJECT_COMMON=(review-code sync-status write-aquarium)
@@ -32,6 +39,7 @@ for agent in "${!AGENT_ROLE[@]}"; do
   role="${AGENT_ROLE[$agent]}"
   d="$AGENTS_DIR/$agent"
   [ -d "$d" ] || { echo "  SKIP $agent"; continue; }
+  [ -n "$ONLY" ] && [ "$agent" != "$ONLY" ] && continue
   mkdir -p "$d/.cline" "$d/.clinerules"
   [ "$DRY" = 1 ] || rm -rf "$d/.cline/skills"
   mkdir -p "$d/.cline/skills"
