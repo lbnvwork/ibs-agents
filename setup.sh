@@ -17,9 +17,9 @@ while [ $# -gt 0 ]; do
 done
 
 GLOBAL_SKILLS=(explain-db git-workflow make-postman run-tests write-adr write-e2e-scenario write-instruction)
-PROJECT_COMMON=(review-code sync-status write-aquarium sync-env)
-STATUS_BRIEFING=status-briefing
-NO_STATUS_BRIEFING="feb jul"
+PROJECT_COMMON=(write-aquarium sync-env)
+REVIEW_CODE="jan apr"
+STATUS_BRIEFING="jan"
 
 declare -A AGENT_ROLE=(
   [ibs-pm-jan]=jan [ibs-analyst-feb]=feb [ibs-lead-apr]=apr
@@ -48,8 +48,11 @@ for agent in "${!AGENT_ROLE[@]}"; do
   for s in "${GLOBAL_SKILLS[@]}" "${PROJECT_COMMON[@]}"; do
     link "$ROOT/skills/$s" "$d/.cline/skills/$s"
   done
-  if [[ "$NO_STATUS_BRIEFING" != *"$role"* ]]; then
-    link "$ROOT/skills/$STATUS_BRIEFING" "$d/.cline/skills/$STATUS_BRIEFING"
+  if [[ "$REVIEW_CODE" == *"$role"* ]]; then
+    link "$ROOT/skills/review-code" "$d/.cline/skills/review-code"
+  fi
+  if [[ "$STATUS_BRIEFING" == *"$role"* ]]; then
+    link "$ROOT/skills/status-briefing" "$d/.cline/skills/status-briefing"
   fi
   for f in "$ROOT"/clinerules/*.md; do
     copy "$f" "$d/.clinerules/$(basename "$f")"

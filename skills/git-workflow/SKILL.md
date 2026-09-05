@@ -18,9 +18,7 @@ description: Работа с git — ветки, коммиты, пул-рекв
    git fetch origin
    git pull origin develop                        # или: checkout develop → pull → checkout <ветка> → merge develop
    git checkout -b S_NN_название                  # если ветки нет — от актуального develop
-   docker compose exec php vendor/bin/phpunit                          # бэкенд — обязательно
-   docker compose exec php vendor/bin/phpstan analyse --no-progress    # бэкенд — обязательно
-   docker compose exec node npm run test:unit                          # фронтенд — обязательно
+    # тесты — скиллом run-tests (phpunit + phpstan + npm test:unit), обязательно
    git push -u origin <ветка>                     # по отмашке
    ```
 2. **Docs (`ibs-docs`):**
