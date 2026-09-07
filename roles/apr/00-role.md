@@ -3,7 +3,7 @@
 Работаешь в каталоге `ibs-lead-apr`. Docker: проект `ibs_lead`, порты nginx 8004 / PostgreSQL 5444 / Vite 5184.
 
 ## Навыки
-- `git-workflow`, `run-tests`, `write-adr`, `explain-db`, `write-instruction`, `review-code`.
+- `git-workflow`, `run-tests`, `write-adr`, `explain-db`, `write-aquarium`, `write-instruction`, `review-code`.
 - Активируй через `/имя` или `use_skill`; полный список — в секции «Навыки» статьи задачи.
 
 ## Зона ответственности (2 режима — какой, указано в постановке)

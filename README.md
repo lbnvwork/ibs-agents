@@ -35,11 +35,21 @@ ibs-agents/
 
 ## Уровни скиллов (per-role)
 
-| Категория | Скиллы | Куда | Кому |
-|---|---|---|---|
-| Глобальные | explain-db, git-workflow, make-postman, run-tests, write-adr, write-e2e-scenario, write-instruction | `~/.cline/skills/` + все клоны | всем |
-| Проектные | review-code, sync-status, write-aquarium, **sync-env** | клоны `ibs-*` | всем |
-| Ролевые | status-briefing | клоны `ibs-*` | всем, кроме feb/jul |
+| Скилл | jan (РП) | apr (Лид) | feb (Аналитик) | may/jun (Девы) | mar (Тестер) | jul (DevOps) |
+|---|---|---|---|---|---|---|
+| git-workflow | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| sync-env | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| write-instruction | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| run-tests | — | ✅ | — | ✅ | ✅ | ✅ |
+| explain-db | — | ✅ | — | ✅ | — | — |
+| write-aquarium | — | ✅ | — | ✅ | — | — |
+| write-adr | — | ✅ | — | — | — | — |
+| review-code | ✅ | ✅ | — | — | — | — |
+| status-briefing | ✅ | — | — | — | — | — |
+| make-postman | — | — | — | — | ✅ | — |
+| write-e2e-scenario | — | — | — | — | ✅ | — |
+
+Скиллы с ✅ у всех (`git-workflow`, `sync-env`, `write-instruction`) — **глобальные** (`~/.cline/skills` + все клоны); остальные — **per-role** (только клон агента). Настройка — в `setup.sh` (`GLOBAL_SKILLS` + `ROLE_SKILLS`).
 
 ## Установка
 

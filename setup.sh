@@ -16,10 +16,23 @@ while [ $# -gt 0 ]; do
   shift
 done
 
-GLOBAL_SKILLS=(explain-db git-workflow make-postman run-tests write-adr write-e2e-scenario write-instruction)
-PROJECT_COMMON=(write-aquarium sync-env)
-REVIEW_CODE="jan apr"
-STATUS_BRIEFING="jan"
+# Скиллы, доступные всем агентам (глобальный ~/.cline/skills + все клоны).
+GLOBAL_SKILLS=(git-workflow sync-env write-instruction)
+
+# Per-role скиллы: роль → список (симлинкуются только в клон агента).
+# Матрица «скилл × роль» — см. README.md.
+declare -A ROLE_SKILLS=(
+  [jan]="review-code status-briefing"
+  [apr]="run-tests explain-db write-aquarium write-adr review-code"
+  [feb]=""
+  [may]="run-tests explain-db write-aquarium"
+  [jun]="run-tests explain-db write-aquarium"
+  [mar]="run-tests make-postman write-e2e-scenario"
+  [jul]="run-tests"
+)
+
+# Скиллы, ранее глобальные, теперь per-role — вычистить из ~/.cline/skills.
+STALE_GLOBAL=(explain-db make-postman run-tests write-adr write-e2e-scenario)
 
 declare -A AGENT_ROLE=(
   [ibs-pm-jan]=jan [ibs-analyst-feb]=feb [ibs-lead-apr]=apr
@@ -31,6 +44,9 @@ copy() { if [ "$DRY" = 1 ]; then echo "  cp -f '$1' '$2'"; else rm -f "$2"; cp -
 
 echo "== Глобальные (~/.cline/skills) =="
 mkdir -p ~/.cline/skills
+for s in "${STALE_GLOBAL[@]}"; do
+  [ "$DRY" = 1 ] || rm -rf "$HOME/.cline/skills/$s"
+done
 for s in "${GLOBAL_SKILLS[@]}"; do
   [ "$DRY" = 1 ] || rm -rf "$HOME/.cline/skills/$s"
   link "$ROOT/skills/$s" "$HOME/.cline/skills/$s"
@@ -45,15 +61,12 @@ for agent in "${!AGENT_ROLE[@]}"; do
   mkdir -p "$d/.cline" "$d/.clinerules"
   [ "$DRY" = 1 ] || rm -rf "$d/.cline/skills"
   mkdir -p "$d/.cline/skills"
-  for s in "${GLOBAL_SKILLS[@]}" "${PROJECT_COMMON[@]}"; do
+  for s in "${GLOBAL_SKILLS[@]}"; do
     link "$ROOT/skills/$s" "$d/.cline/skills/$s"
   done
-  if [[ "$REVIEW_CODE" == *"$role"* ]]; then
-    link "$ROOT/skills/review-code" "$d/.cline/skills/review-code"
-  fi
-  if [[ "$STATUS_BRIEFING" == *"$role"* ]]; then
-    link "$ROOT/skills/status-briefing" "$d/.cline/skills/status-briefing"
-  fi
+  for s in ${ROLE_SKILLS[$role]:-}; do
+    link "$ROOT/skills/$s" "$d/.cline/skills/$s"
+  done
   for f in "$ROOT"/clinerules/*.md; do
     copy "$f" "$d/.clinerules/$(basename "$f")"
   done
