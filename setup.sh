@@ -28,7 +28,7 @@ declare -A ROLE_SKILLS=(
   [may]="run-tests explain-db write-aquarium"
   [jun]="run-tests explain-db write-aquarium"
   [mar]="run-tests make-postman write-e2e-scenario"
-  [jul]="run-tests"
+  [jul]="run-tests release"
 )
 
 # Скиллы, ранее глобальные, теперь per-role — вычистить из ~/.cline/skills.
