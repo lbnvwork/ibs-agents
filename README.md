@@ -48,6 +48,8 @@ ibs-agents/
 | status-briefing | ✅ | — | — | — | — | — |
 | make-postman | — | — | — | — | ✅ | — |
 | write-e2e-scenario | — | — | — | — | ✅ | — |
+| find-dead-code | ✅ | ✅ | — | ✅ | — | ✅ |
+| release | — | — | — | — | — | ✅ |
 
 Скиллы с ✅ у всех (`git-workflow`, `sync-env`, `write-instruction`) — **глобальные** (`~/.cline/skills` + все клоны); остальные — **per-role** (только клон агента). Настройка — в `setup.sh` (`GLOBAL_SKILLS` + `ROLE_SKILLS`).
 

@@ -22,13 +22,13 @@ GLOBAL_SKILLS=(git-workflow sync-env write-instruction)
 # Per-role скиллы: роль → список (симлинкуются только в клон агента).
 # Матрица «скилл × роль» — см. README.md.
 declare -A ROLE_SKILLS=(
-  [jan]="review-code status-briefing"
-  [apr]="run-tests explain-db write-aquarium write-adr review-code"
+  [jan]="review-code status-briefing find-dead-code"
+  [apr]="run-tests explain-db write-aquarium write-adr review-code find-dead-code"
   [feb]=""
-  [may]="run-tests explain-db write-aquarium"
-  [jun]="run-tests explain-db write-aquarium"
+  [may]="run-tests explain-db write-aquarium find-dead-code"
+  [jun]="run-tests explain-db write-aquarium find-dead-code"
   [mar]="run-tests make-postman write-e2e-scenario"
-  [jul]="run-tests release"
+  [jul]="run-tests release find-dead-code"
 )
 
 # Скиллы, ранее глобальные, теперь per-role — вычистить из ~/.cline/skills.
